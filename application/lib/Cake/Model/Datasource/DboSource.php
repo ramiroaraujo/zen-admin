@@ -776,7 +776,7 @@ class DboSource extends DataSource {
 			return $value;
 		}
 		if (!$this->_methodCacheChange && empty(self::$methodCache)) {
-			self::$methodCache = Cache::read('method_cache', '_cake_core_');
+			self::$methodCache = (array)Cache::read('method_cache', '_cake_core_');
 		}
 		if ($value === null) {
 			return (isset(self::$methodCache[$method][$key])) ? self::$methodCache[$method][$key] : null;
@@ -2743,10 +2743,11 @@ class DboSource extends DataSource {
 		$operatorMatch .= ')\\x20?)|<[>=]?(?![^>]+>)\\x20?|[>=!]{1,3}(?!<)\\x20?)/is';
 		$bound = (strpos($key, '?') !== false || (is_array($value) && strpos($key, ':') !== false));
 
+		$key = trim($key);
 		if (strpos($key, ' ') === false) {
 			$operator = '=';
 		} else {
-			list($key, $operator) = explode(' ', trim($key), 2);
+			list($key, $operator) = explode(' ', $key, 2);
 
 			if (!preg_match($operatorMatch, trim($operator)) && strpos($operator, ' ') !== false) {
 				$key = $key . ' ' . $operator;
@@ -3048,7 +3049,7 @@ class DboSource extends DataSource {
 				list($col, $limit) = explode('(', $col);
 			}
 			if ($limit !== null) {
-				return intval($limit);
+				return (int)$limit;
 			}
 			return null;
 		}
@@ -3089,7 +3090,7 @@ class DboSource extends DataSource {
 				}
 			}
 		}
-		return intval($length);
+		return (int)$length;
 	}
 
 /**
@@ -3456,10 +3457,10 @@ class DboSource extends DataSource {
 			if (is_bool($value)) {
 				return 'boolean';
 			}
-			if (is_float($value) && floatval($value) === $value) {
+			if (is_float($value) && (float)$value === $value) {
 				return 'float';
 			}
-			if (is_int($value) && intval($value) === $value) {
+			if (is_int($value) && (int)$value === $value) {
 				return 'integer';
 			}
 			if (is_string($value) && strlen($value) > 255) {
