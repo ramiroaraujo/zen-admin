@@ -19,7 +19,7 @@
 ?>
 <?php echo "<?php /* @var \$this View */ ?>\n" ?>
 <?php if (strpos($action, 'add') !== FALSE): ?>
-<?php echo "<?php echo \$this->element( 'admin/model_panel' ); ?>\n" ?>
+<?php echo "<?php echo \$this->element( 'admin/panels/model_panel' ); ?>\n" ?>
 <?php else: ?>
 <?php echo "<?php echo \$this->element( 'admin/panels/record_panel', array( 'id' => \$this->BootstrapForm->value( '{$modelClass}.{$primaryKey}' ) ) ); ?>\n" ?>
 <?php endif; ?>
