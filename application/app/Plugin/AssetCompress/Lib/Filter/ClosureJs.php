@@ -42,7 +42,7 @@ class ClosureJs extends AssetFilter {
 
 		$cmd = 'java -jar "' . $jar . '"';
 		foreach ($options as $key => $value) {
-			$cmd .= sprintf(' --%s=%s', $key, $value);
+			$cmd .= sprintf(' --%s="%s"', $key, $value);
 		}
 
 		try {
